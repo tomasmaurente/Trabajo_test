@@ -8,6 +8,7 @@ namespace Tests
         private Person personaCamposNull;
         private Person personaCamposVacios;
         private Person personaCamposValidos;
+        private Person personaCampoIDString;
 
         [SetUp]
         public void Setup()
@@ -21,6 +22,8 @@ namespace Tests
 
             Person person = new Person("Matias", "49105887");
             this.personaCamposValidos = person;
+
+            this.personaCampoIDString = new Person("Forlan","49a05887");
         }
 
 
@@ -117,12 +120,24 @@ namespace Tests
         [Test]
         public void SetValidID()
         {
+            // Arrange.
             string expectedID = "52115803";
             // Act.
             this.personaCamposValidos.ID = expectedID;
             // Assert.
             // Cuando la ID es valida se asigna.
             Assert.AreEqual(this.personaCamposValidos.ID,expectedID);
+        }
+
+        // Se chequea que en caso de que se ingrese una letra a la cedula esta no sea valida.
+        [Test]
+        public void IfStringIsInID()
+        {
+            // Arrange.
+            string expectedId = null;
+            
+            // Assert.
+            Assert.AreEqual(expectedId,this.personaCampoIDString.ID);
         }
         
 
