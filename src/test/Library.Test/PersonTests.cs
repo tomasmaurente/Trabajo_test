@@ -16,14 +16,16 @@ namespace Tests
             // Patron triple A.
             // Arrange.
 
-            this.personaCamposNull = new Person(null,"");
+            this.personaCamposNull = new Person(null, "");
 
             this.personaCamposVacios = new Person("", "");
 
-            Person person = new Person("Matias", "49105887");
-            this.personaCamposValidos = person;
+            Person personMatias = new Person("Matias", "49105887");
+            this.personaCamposValidos = personMatias;
 
-            this.personaCampoIDString = new Person("Forlan","49a05887");
+            // Si se toma "a" como un unico valor que sea 10 la ID sería valida ya que a 521158(10) le corresponde el digito verificador 3.
+            Person personTomas = new Person("Tomas", "521158a3");
+            this.personaCampoIDString = personTomas;
         }
 
 
@@ -31,37 +33,62 @@ namespace Tests
         [Test]
         public void BuildWithNullName()
         {
-            Assert.AreEqual(this.personaCamposNull.Name,null);
+            // Arrange.
+            string expectedName = null;
+            // Assert. 
+            Assert.AreEqual(expectedName, this.personaCamposNull.Name);
         }
 
         // Se testea que sucede cuando al contructor se le pasa un string vacio en el campo Name.
         [Test]
         public void BuildWithEmptyName()
         {
+            // Arrange.
+            string expectedName = null;
+            // Assert.
             // No deberia aceptarse el valor "" en el campo Nombre, y deberia ser null como cuando se crea la variable personaCamposVacios.Name.
-            Assert.AreEqual(this.personaCamposVacios.Name, null);
+            Assert.AreEqual(expectedName, this.personaCamposVacios.Name);
         }
 
         // Se testea que sucede cuando al contructor se le pasa un string vacio en el campo ID.
         [Test]
         public void BuildWithEmptyID()
         {
+            // Arrange.
+            string expectedID = null;
+            // Assert.
             // No deberia aceptarse el valor "" en el campo ID, y deberia ser null como cuando se crea la variable personaCamposVacios.ID.
-            Assert.AreEqual(this.personaCamposVacios.ID, null);
+            Assert.AreEqual(expectedID, this.personaCamposVacios.ID);
+        }
+
+        // Se chequea que en caso de que se ingrese una letra a la cedula esta no sea valida.
+        [Test]
+        public void BuildWithCharID()
+        {
+            // Arrange.
+            string expectedId = null;
+            // Assert.
+            Assert.AreEqual(expectedId, this.personaCampoIDString.ID);
         }
 
         // Se testea que sucede cuando al contructor se le pasa un string valido en el campo Name.
         [Test]
         public void BuildWithValidName()
         {
-            Assert.AreEqual(this.personaCamposValidos.Name, "Matias");
+            // Arrange.
+            string expectedName = "Matias";
+            // Assert.
+            Assert.AreEqual(expectedName, this.personaCamposValidos.Name);
         }
 
         // Se testea que sucede cuando al contructor se le pasa un string valido en el campo ID.
         [Test]
         public void BuildWithValidID()
         {
-            Assert.AreEqual(this.personaCamposValidos.ID, "49105887");
+            // Arrange.
+            string expectedID = "49105887";
+            // Assert.
+            Assert.AreEqual(expectedID, this.personaCamposValidos.ID);
         }
 
 
@@ -78,7 +105,7 @@ namespace Tests
             this.personaCamposValidos.Name = null;
             // Assert.
             // Cuando se setea una variable con null, esta asignacion deberia ser ignorada, manteniendo el valor original.
-            Assert.AreEqual(this.personaCamposValidos.Name, expectedName);
+            Assert.AreEqual(expectedName, this.personaCamposValidos.Name);
         }
 
         // Se testea la asignacion de un string vacio mediante set del campo Name.
@@ -90,7 +117,7 @@ namespace Tests
             this.personaCamposValidos.Name = "";
             // Assert.
             // Cuando se setea una variable con null, esta asignacion deberia ser ignorada, manteniendo el valor original.
-            Assert.AreEqual(this.personaCamposValidos.Name, expectedName);
+            Assert.AreEqual(expectedName, this.personaCamposValidos.Name);
         }
 
         // Se testea la asignacion de un string vacio mediante set del campo ID.
@@ -101,7 +128,7 @@ namespace Tests
             // Act.
             this.personaCamposValidos.ID = "";
             // Assert.
-            Assert.AreEqual(this.personaCamposValidos.ID, expectedID);
+            Assert.AreEqual(expectedID, this.personaCamposValidos.ID);
         }
 
         // Se testea la asignacion de un ID mas largo de lo debido.
@@ -113,7 +140,7 @@ namespace Tests
             this.personaCamposValidos.ID = "491058877";
             // Assert.
             // Cuando la ID es mas larga de lo esperado la asignacion deberia ser ignorada, manteniendo el valor original.
-            Assert.AreEqual(this.personaCamposValidos.ID, expectedID);
+            Assert.AreEqual(expectedID, this.personaCamposValidos.ID);
         }
 
         // Se testea una asignacion de una ID valida.
@@ -126,27 +153,16 @@ namespace Tests
             this.personaCamposValidos.ID = expectedID;
             // Assert.
             // Cuando la ID es valida se asigna.
-            Assert.AreEqual(this.personaCamposValidos.ID,expectedID);
+            Assert.AreEqual(expectedID, this.personaCamposValidos.ID);
         }
 
-        // Se chequea que en caso de que se ingrese una letra a la cedula esta no sea valida.
-        [Test]
-        public void IfStringIsInID()
-        {
-            // Arrange.
-            string expectedId = null;
-            
-            // Assert.
-            Assert.AreEqual(expectedId,this.personaCampoIDString.ID);
-        }
-        
 
 
 
         // Si la asignacion de la variable personaCamposNull se la siguiente :
-        
+
         // this.personaCamposNull = new Person(null,null);
-        
+
         // el codigo lanza un error que nisiquiera permite la corrida de tests
         // si se permitiese dicha asgnacion deberian agregarse los dos siguientes tests.
 
@@ -158,13 +174,14 @@ namespace Tests
 
 
         // Aqui los tests que se deben agregar para complementar el trabajo.
-        
+
 
         //        // Se testea que sucede cuando al contructor se le pasa un null en el campo ID.
         // [Test]
         // public void BuildWithNullID()
         // {
-        //     Assert.AreEqual(this.personaCamposNull.ID,null);
+        //     expectedID = null;
+        //     Assert.AreEqual(expectedID,this.personaCamposNull.ID);
         // }
 
 
@@ -179,7 +196,7 @@ namespace Tests
         //     this.personaCamposValidos.ID = null;
         //     // Assert.
         //     // Cuando se setea una variable con null, esta asignacion deberia ser ignorada, manteniendo el valor original.
-        //     Assert.AreEqual(this.personaCamposValidos.ID, expectedID);
+        //     Assert.AreEqual(expectedID, this.personaCamposValidos.ID);
         // }
 
     }
